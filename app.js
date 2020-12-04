@@ -55,6 +55,7 @@ app.use(express.urlencoded({ extended: false}))
 //ROUTES
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+app.use('/dashboard', require ('./routes/dashboard'))
 
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, console.log(`server is listening on port ${PORT}`));

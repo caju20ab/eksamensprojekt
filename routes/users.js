@@ -15,15 +15,19 @@ router.get('/register', (req, res) => res.render('register'));
 
 //Register Handle
 router.post('/register', (req, res) => {
-const { name, email, password, password2 } = req.body;
+const { name, email, age, Gender,prefGender, password, password2 } = req.body;
 let errors = [];
 
 
 //Check required fields
-if (!name || !email || !password || !password2) {
+if (!name || !email || !age || !Gender || !prefGender || !password || !password2) {
     errors.push ({ msg: 'Please fill all required fields' })
 }
 
+/*//Check age metode som vi forsøgtet at få 
+if (age > 100 && age < 18){
+    errors.push ({msg:'You must be between 18 - 100 to create a user'})
+}*/
 
 //Check if passwords are matching
 
@@ -41,6 +45,7 @@ if (errors.length > 0){
 errors,
 name,
 email,
+age,
 password,
 password2
 });
@@ -55,6 +60,9 @@ User.findOne({email: email})
             errors,
             name,
             email,
+            age,
+            Gender,
+            prefGender,
             password,
             password2
     });
@@ -62,10 +70,14 @@ User.findOne({email: email})
     const newUser = new User ({
         name,
         email,
-        password
+        age,
+        password,
+        Gender,
+        prefGender
     })
 //HASH adgangskode
-    bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
+    bcrypt.genSalt(10, (err, salt) => 
+    bcrypt.hash(newUser.password, salt, (err, hash) => {
 
         if(err) throw err;
 //Set password
@@ -94,7 +106,7 @@ router.post('/login', (req, res, next) => {
 
 //Logout handle
 router.get('/logout', (req, res) => {
-    req.logout
+    req.logOut();
     req.flash ('success_msg', 'You are now logged out');
     res.redirect('/users/login')
 })

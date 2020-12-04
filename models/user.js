@@ -9,6 +9,19 @@ email: {
     type: String,
     required: true
 },
+age: {
+    type: String,
+    required: true
+},
+
+Gender: {
+    type: String,
+    required: true
+},
+prefGender: {
+    type: String,
+    required: true
+},
 
 password: {
     type: String,
